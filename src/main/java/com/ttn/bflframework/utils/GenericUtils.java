@@ -13,33 +13,26 @@ import java.util.Properties;
 
 public class GenericUtils {
 
-    public static WebDriver driver;
-    static File DestFile = new File("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\ScreenShots");
 
-    public static String getDataFromConfig(String key) {
-        String value = null;
+
+    public static String getDataFromConfig(String key) throws IOException {
+
         Properties prop = new Properties();
         File f = new File("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\config.properties");
-        FileInputStream fip = null;
-        try {
-            fip = new FileInputStream(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            prop.load(fip);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return value;
+
+        FileInputStream fip = new FileInputStream(f);
+
+         prop.load(fip);
+         String value= prop.getProperty(key);
+         return value;
     }
 
-    public static String takeScreenshot() throws IOException {
+    public static String takeScreenshot(WebDriver driver) throws IOException {
 
         String screenshotName = "image" + System.currentTimeMillis() + ".png";
         TakesScreenshot scrShot =((TakesScreenshot)driver);
         File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(SrcFile, DestFile);
+        FileUtils.copyFile(SrcFile, new File("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\ScreenShots\\"+screenshotName));
         return screenshotName;
 
     }

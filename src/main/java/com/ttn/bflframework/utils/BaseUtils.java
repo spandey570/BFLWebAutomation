@@ -6,6 +6,7 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -15,6 +16,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 public class BaseUtils {
@@ -26,8 +28,11 @@ public class BaseUtils {
    public String envkey;
    public String browserkey;
 
+   public UIUtils utils;
 
-@BeforeSuite
+
+
+@BeforeTest
 public void config()
 {
    //Extent Report Setup in BaseLib
@@ -41,11 +46,11 @@ public void config()
 }
 
 @BeforeMethod
-
 protected void startReporting(Method method) {
    String testName;
 
    testName = this.getClass().getSimpleName() + " : " + method.getName();
+   System.out.println(method.getAnnotation(Test.class).description());
    testReport = extent.startTest(testName, method.getAnnotation(Test.class).description());
 
    log.info("Extent report logging started for " + testName);
@@ -53,18 +58,42 @@ protected void startReporting(Method method) {
    testReport.log(LogStatus.INFO, "Test execution started.");
 }
 
-   public void setUp(String browser) {
 
-   browserkey =GenericUtils.getDataFromConfig("browser");
-   driverInitilization(browserkey);
-   envkey =GenericUtils.getDataFromConfig("environment");
-   url= getEnvironmentURL(envkey);
-   driver.get(url);
-   driver.manage().window().maximize();
+@BeforeClass()
+
+   public void setUp() throws IOException {
+
+   String isRunSameBrowser = GenericUtils.getDataFromConfig("isRunSameBrowser");
+   if(isRunSameBrowser.equalsIgnoreCase("Yes")) {
+      browserkey = GenericUtils.getDataFromConfig("browser");
+      driverInitilization(browserkey);
+      envkey = GenericUtils.getDataFromConfig("environment");
+      url = getEnvironmentURL(envkey);
+      driver.get(url);
+      driver.manage().window().maximize();
+   }
 
 }
 
-   private String getEnvironmentURL(String environment) {
+   @BeforeMethod()
+
+   public void setUpMultiInstance() throws IOException {
+
+      String isRunSameBrowser = GenericUtils.getDataFromConfig("isRunSameBrowser");
+      if(isRunSameBrowser.equalsIgnoreCase("No")) {
+         browserkey = GenericUtils.getDataFromConfig("browser");
+         driverInitilization(browserkey);
+         envkey = GenericUtils.getDataFromConfig("environment");
+         url = getEnvironmentURL(envkey);
+         driver.get(url);
+         driver.manage().window().maximize();
+      }
+
+   }
+
+
+
+   private String getEnvironmentURL(String environment) throws IOException {
       switch (environment.toUpperCase()) {
          case "Test":
             return "https://bfltest-web-client.qa3.tothenew.net/";
@@ -80,12 +109,13 @@ protected void startReporting(Method method) {
 
    public void driverInitilization(String browser)
 {
+     System.out.println(browser+" is going to launch");
    if (browser.equalsIgnoreCase("Chrome")) {
-      System.setProperty("webdriver.chrome.driver", "");
+      System.setProperty("webdriver.chrome.driver", "D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\Drivers\\chromedriver.exe");
       driver = new ChromeDriver();
       log.info(browser+ "browser instance is launching");
    } else if (browser.equalsIgnoreCase("Firefox")) {
-      System.setProperty("webdriver.gecko.driver", "");
+      System.setProperty("webdriver.gecko.driver", "D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\Drivers\\geckodriver.exe");
       driver = new FirefoxDriver();
       log.info(browser+ "browser instance is launching");
    } else if (browser.equalsIgnoreCase("Edge")) {
@@ -105,7 +135,7 @@ protected void reportFailure(ITestResult result, Method method) {
    String testName = this.getClass().getSimpleName() + " : " + method.getName();
    if (result.getStatus() == ITestResult.FAILURE) {
       try {
-           String screenshotName = GenericUtils.takeScreenshot();
+           String screenshotName = GenericUtils.takeScreenshot(driver);
          testReport.log(LogStatus.FAIL, "<b>Test case failed with exception: </b><br>" +
                  result.getThrowable().toString().replace("\n", "<br>") +
                  "<br><b>Snapshot:</b><br>" + testReport.addScreenCapture(screenshotName));
@@ -119,9 +149,22 @@ protected void reportFailure(ITestResult result, Method method) {
    testReport.log(LogStatus.INFO, "Test execution completed.");
    extent.endTest(testReport);
 }
+   @AfterClass(enabled = true)
 
-   protected void tearDown() {
+
+   protected void tearDown() throws IOException {
+      String isRunSameBrowser = GenericUtils.getDataFromConfig("isRunSameBrowser");
+      if(isRunSameBrowser.equalsIgnoreCase("Yes")) {
       driver.quit();
+   }}
+
+   @AfterMethod(enabled = true)
+
+   protected void tearDownMultiInstance() throws IOException {
+      String isRunSameBrowser = GenericUtils.getDataFromConfig("isRunSameBrowser");
+      if (isRunSameBrowser.equalsIgnoreCase("No")) {
+         driver.quit();
+      }
    }
 
 
@@ -130,6 +173,8 @@ protected void reportFailure(ITestResult result, Method method) {
       extent.flush();
       extent.close();
 
+
    }
+
 }
 
