@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Sanity Test" parallel="tests">
+<suite name="Sanity Test">
 
-    <test name="Test2">
+
+    <test name="Test1">
         <classes>
-            <class name="com.ttn.bflframework.testscripts.Test123"/>
+            <class name="com.ttn.bflframework.testscripts.SignInTest"/>
         </classes>
     </test>
 
-    <test name="Test">
+
+    <test name="Test2">
         <classes>
-            <class name="com.ttn.bflframework.testscripts.TestRegistration"/>
+            <class name="com.ttn.bflframework.testscripts.WishlistTest"/>
         </classes>
     </test>
 

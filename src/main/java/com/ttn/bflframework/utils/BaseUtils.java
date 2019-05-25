@@ -70,6 +70,7 @@ protected void startReporting(Method method) {
       envkey = GenericUtils.getDataFromConfig("environment");
       url = getEnvironmentURL(envkey);
       driver.get(url);
+      driver.manage().deleteAllCookies();
       driver.manage().window().maximize();
    }
 
@@ -86,6 +87,7 @@ protected void startReporting(Method method) {
          envkey = GenericUtils.getDataFromConfig("environment");
          url = getEnvironmentURL(envkey);
          driver.get(url);
+         driver.manage().deleteAllCookies();
          driver.manage().window().maximize();
       }
 
@@ -95,12 +97,12 @@ protected void startReporting(Method method) {
 
    private String getEnvironmentURL(String environment) throws IOException {
       switch (environment.toUpperCase()) {
-         case "Test":
-            return "https://bfltest-web-client.qa3.tothenew.net/";
-         case "Dev":
-            return "https://bfl-web-client.qa3.tothenew.net/";
+         case "TEST":
+            return "https://bflweb:bflwebttn14@@bfltest-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
+         case "DEV":
+            return "https://bflweb:bflwebttn14@@bfl-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
          case "UAT":
-            return "https://bfluat-web-client.qa3.tothenew.net/";
+            return "https:/bflweb:bflwebttn14@@/bfluat-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
 
             default:
             return GenericUtils.getDataFromConfig("url");
@@ -111,7 +113,7 @@ protected void startReporting(Method method) {
 {
      System.out.println(browser+" is going to launch");
    if (browser.equalsIgnoreCase("Chrome")) {
-      System.setProperty("webdriver.chrome.driver", "D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\Drivers\\chromedriver.exe");
+      System.setProperty("webdriver.chrome.driver", "D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\Test\\Chrome74\\chromedriver.exe");
       driver = new ChromeDriver();
       log.info(browser+ "browser instance is launching");
    } else if (browser.equalsIgnoreCase("Firefox")) {
@@ -177,4 +179,5 @@ protected void reportFailure(ITestResult result, Method method) {
    }
 
 }
+
 

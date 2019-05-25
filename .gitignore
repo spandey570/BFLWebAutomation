@@ -1,6 +1,6 @@
 .idea/
 .idea/*
-/src/AutomationReport/
+/src/main/AutomationReport/
 /src/main/resources/ScreenShots/
 /src/main/ScriptLogs/
-/target/classes/*
+target/
