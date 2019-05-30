@@ -8,7 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import sun.plugin.util.UIUtil;
 
 import java.io.IOException;
-
+import java.util.List;
 
 
 public class UIUtils {
@@ -38,7 +38,7 @@ public class UIUtils {
     public void Type(By locator, String description, String data) {
         try {
             driver.findElement(locator).sendKeys(data);
-            testReport.log(LogStatus.PASS, description + " :" + data);
+            testReport.log(LogStatus.PASS, description + " : " + data);
             log.info(description + " :" + data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,7 +52,7 @@ public class UIUtils {
         try {
             String text = driver.findElement(locator).getText();
             log.info(description+" :"+text);
-            testReport.log(LogStatus.PASS, description+" :"+text);
+            testReport.log(LogStatus.PASS, description+" : "+text);
             return text;
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,6 +60,40 @@ public class UIUtils {
             reportTestStepFailure(description, e, true);
             return "Error in returning text of a webelement!" + e.getMessage();
         }
+    }
+
+    public void moveBack()
+    {
+        driver.navigate().back();
+        log.info("Moved back to last page");
+        testReport.log(LogStatus.PASS,("Moved back to last page"));
+    }
+
+    public int getElementList(By locator)
+    {
+        List<WebElement> ele = driver.findElements(locator);
+        return ele.size();
+
+    }
+
+    public void verifyUrlExist(String input)
+    {
+        String currentUrl= getUrl();
+        if(currentUrl.contains(input))
+        {
+            log.info("Verify current url consist "+input+" in the link");
+            testReport.log(LogStatus.PASS,"Verify current url consist "+input+" in the link");
+        }
+        else
+        {
+            log.info("User is redirected to incorrect url");
+            testReport.log(LogStatus.FAIL,"User is redirected to incorrect url");
+        }
+    }
+
+    public String getAttribute(By locator)
+    {
+        return driver.findElement(locator).getAttribute("className");
     }
 
     public void mouseHover(By locator,String description)
@@ -95,6 +129,11 @@ public class UIUtils {
                     + e.getMessage());
             return false;
         }
+    }
+
+    public String getUrl()
+    {
+        return driver.getCurrentUrl();
     }
 
     public void javaScriptClick(By locator,String description) {

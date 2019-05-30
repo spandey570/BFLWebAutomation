@@ -1,7 +1,6 @@
 package com.ttn.bflframework.pages;
 
 import com.ttn.bflframework.utils.*;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 
 import java.io.IOException;
@@ -24,7 +23,8 @@ public class ProductListingPage {
     }
 
     private By firstProduct= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProduct", "Locator"));
-    private By firstProductDetails= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductDetails", "Locator"));
+    private By firstProductName= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductName", "Locator"));
+    private By firstProductDescription = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductDescription", "Locator"));
     private By firstProductPrice= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductPrice", "Locator"));
     private By quickLookBtn= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "quickLookBtn", "Locator"));
     private By emptyWishlistIcon= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "emptyWishlistIcon", "Locator"));
@@ -42,14 +42,15 @@ public class ProductListingPage {
     public void clickFirstProduct()
     {
         wUtils.eWaitForElementVisible(firstProduct,30);
-        utils.click(firstProduct,"Click on first product of product listing page");
+        utils.javaScriptClick(firstProduct,"Click on first product of product listing page");
     }
 
-    public String getFirstProductDetails()
+    public String getFirstProductDescription()
     {
-        wUtils.eWaitForElementVisible(firstProductDetails,30);
-        String details= utils.getText(firstProductDetails,"Fetch the details of first product");
-        return details;
+        wUtils.eWaitForElementVisible(firstProductDescription,30);
+        String name= utils.getText(firstProductName,"Product Name is");
+        String description= utils.getText(firstProductDescription,"Details of first product");
+        return name+description;
     }
 
     public String getFirstProductPrice()

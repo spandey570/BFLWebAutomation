@@ -22,18 +22,22 @@ public class QuicklookPage {
         this.vUtils = vUtils;
     }
 
-    private By productDetails = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "productDetails", "Locator"));
+    private By productName = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "productName", "Locator"));
+    private By productDescription = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "productDescription", "Locator"));
     private By addToCartBtn = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "addToCartBtn", "Locator"));
     private By addItemToWishlist = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "addItemToWishlist", "Locator"));
     private By removeItemFromWishlist = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "removeItemFromWishlist", "Locator"));
     private By seeProductDetails = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "seeProductDetails", "Locator"));
     private By closeQuicklook = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "closeQuicklook", "Locator"));
+    private By sizeList= By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "sizeList", "Locator"));
 
-    public void verifyProductDetailsOnQL(String expected)
+    public void verifyProductDescriptionOnQL(String expected)
     {
-        wUtils.eWaitForElementVisible(productDetails,30);
-        String actual= utils.getText(productDetails,"Product details at quicklook page");
-        vUtils.verifyStringEquals(actual,expected,"Verify the product details on quicklook page",true);
+        wUtils.eWaitForElementVisible(productDescription,30);
+        String name= utils.getText(productName,"Product name at quicklook page");
+        String description= utils.getText(productDescription,"Product description at quicklook page");
+        String actual= name+description;
+        vUtils.verifyStringEquals(actual,expected,"Verify the product description on quicklook page",true);
     }
 
     public void addItemToWishlist()
@@ -64,5 +68,23 @@ public class QuicklookPage {
     {
         wUtils.eWaitForElementVisible(closeQuicklook,30);
         utils.click(closeQuicklook,"Click on close(x) inorder to close the quicklook window");
+    }
+
+    public void selectAvailableItemSize() {
+        wUtils.eWaitForElementVisible(sizeList,30);
+        boolean sizeStaus = utils.isElementPresent(sizeList, "Check the visibility of product size element");
+        if (sizeStaus == true) {
+           // wUtils.eWaitForElementVisible(sizeList, 30);
+            int eleCount = utils.getElementList(sizeList);
+            for (int i = 1; i <= eleCount; i++) {
+                String classN = utils.getAttribute(By.xpath("(//*[@class='quicklook_content']//ul[@class='size_list']//li)[" + i + "]"));
+                if (classN.equalsIgnoreCase("size_not_available")) {
+                } else {
+                    utils.click(By.xpath("(//*[@class='quicklook_content']//ul[@class='size_list']//li)[" + i + "]"), "Select the available size");
+                    utils.getText(By.xpath("(//*[@class='quicklook_content']//ul[@class='size_list']//li)[" + i + "]"), "Selected available size is");
+                    break;
+                }
+            }
+        }
     }
 }

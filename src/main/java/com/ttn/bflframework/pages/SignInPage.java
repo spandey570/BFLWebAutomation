@@ -44,7 +44,7 @@ public class SignInPage {
     public void clickSignIn() {
         wUtils.eWaitForElementVisible(emailTxt, 30);
         utils.click(signInBtn, "Click on Sign-In button");
-        wUtils.iWaitForSeconds(10);
+        wUtils.checkForPageLoad(60);
     }
 
 }

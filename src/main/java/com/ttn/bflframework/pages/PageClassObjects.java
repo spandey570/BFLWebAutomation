@@ -15,6 +15,9 @@ public class PageClassObjects {
      public HeaderPage header;
      public WishlistPage wishlist;
      public QuicklookPage ql;
+     public ProductDetailPage pdp;
+     public CommonScenarios common;
+     public CartPage cart;
 
      public PageClassObjects(UIUtils utils, WaitUtils wUtils, VerifyUtils vUtils) throws IOException {
          home= new HomePage(utils,wUtils,vUtils);
@@ -23,6 +26,9 @@ public class PageClassObjects {
          header= new HeaderPage(utils,wUtils,vUtils);
          wishlist= new WishlistPage(utils,wUtils,vUtils);
          ql= new QuicklookPage(utils,wUtils,vUtils);
+         pdp= new ProductDetailPage(utils,wUtils,vUtils);
+         common= new CommonScenarios(utils,wUtils,vUtils);
+         cart= new CartPage(utils,wUtils,vUtils);
      }
 
 }

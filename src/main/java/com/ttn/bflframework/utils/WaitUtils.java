@@ -51,6 +51,7 @@ public class WaitUtils {
             log.info("Waiting for "+sec+" seconds an element to be visible using String locator: "+ locator.toString());
             WebDriverWait wait = new WebDriverWait(driver, sec);
             wait.until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOfElementLocated(locator)));
+            log.info(locator +" is now visible");
         }
         catch (Exception e)
         {

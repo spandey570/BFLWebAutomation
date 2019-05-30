@@ -23,7 +23,8 @@ public class WishlistPage {
         this.vUtils = vUtils;
     }
 
-    private By firstProductDetails = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductDetails", "Locator"));
+    private By firstProductName = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductName", "Locator"));
+    private By firstProductDescription = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductDescription", "Locator"));
     private By firstProductPrice = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductPrice", "Locator"));
     private By firstProductOldPrice = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductOldPrice", "Locator"));
     private By firstProductDiscount = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "firstProductDiscount", "Locator"));
@@ -31,6 +32,8 @@ public class WishlistPage {
     private By deleteItem = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "deleteItem", "Locator"));
     private By wishlistHeading = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "wishlistHeading", "Locator"));
     private By emptyWishlist = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "emptyWishlist", "Locator"));
+    private By dropdownSelector = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "dropdownSelector", "Locator"));
+    private By sizeSelection = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "sizeSelection", "Locator"));
 
     public void verifyProductOldPrice(String expected)
     {
@@ -39,11 +42,13 @@ public class WishlistPage {
         vUtils.verifyStringEquals(actual, expected,"Verify the old price of the product inside wishlist",true);
     }
 
-    public void verifyProductDetails(String expected)
+    public void verifyProductDescription(String expected)
     {
         wUtils.iWaitForSeconds(30);
-        String actual= utils.getText(firstProductDetails,"Product Details inside wishlist");
-        vUtils.verifyStringEquals(actual, expected,"Verify the product details inside wishlist",true);
+        String name= utils.getText(firstProductName,"Product name at wishlist page");
+        String description= utils.getText(firstProductDescription,"Product description inside wishlist");
+        String actual= name+description;
+        vUtils.verifyStringEquals(actual, expected,"Verify the product description inside wishlist",true);
     }
 
     public void verifyProductDiscount(String expected)
@@ -77,5 +82,19 @@ public class WishlistPage {
         wUtils.iWaitForSeconds(30);
         String actual= utils.getText(emptyWishlist,"Fetch the text incase whishlist is empty");
         vUtils.verifyStringEquals(actual, expected,"Verify that wishlist is empty",true);
+    }
+
+    public void verifyWishlistUrl()
+    {
+      utils.verifyUrlExist("wishlist");
+
+    }
+
+    public void selectItemSize()
+    {
+        wUtils.eWaitForElementVisible(dropdownSelector,30);
+        utils.click(dropdownSelector,"Click on size selection dropdown");
+        String size= utils.getText(sizeSelection,"First available size");
+        utils.click(sizeSelection,"Click on "+size+" option");
     }
 }

@@ -100,7 +100,7 @@ protected void startReporting(Method method) {
          case "TEST":
             return "https://bflweb:bflwebttn14@@bfltest-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
          case "DEV":
-            return "https://bflweb:bflwebttn14@@bfl-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
+            return "https://bflweb:bflwebttn14@@www.bfl-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
          case "UAT":
             return "https:/bflweb:bflwebttn14@@/bfluat-web-client.qa3.tothenew.net/"+GenericUtils.getDataFromConfig("language");
 

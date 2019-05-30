@@ -25,19 +25,21 @@ public class WishlistTest extends BaseUtils {
     @Test(description = "Verify that user is able to add & remove the item from the wishlist page")
     public void addRemoveProductFromWishlist()
     {
+        pageObjects.common.countrySelection("Oman");
         pageObjects.home.mouseHoverOnProfileIcon();
         pageObjects.home.clickSignIn();
         pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
         pageObjects.signIn.enterPassword("12345678");
         pageObjects.signIn.clickSignIn();
         pageObjects.header.clickNew();
-        String details= pageObjects.plp.getFirstProductDetails();
+        String details= pageObjects.plp.getFirstProductDescription();
         pageObjects.plp.mousehoverOnFirstProduct();
         pageObjects.plp.addToWishlist();
         pageObjects.header.getWishlistItemCount();
         pageObjects.header.clickOnWishlist();
+        pageObjects.wishlist.verifyWishlistUrl();
         pageObjects.wishlist.verifyWishlistHeading("My Wishlist 1 Item(s)");
-        pageObjects.wishlist.verifyProductDetails(details);
+        pageObjects.wishlist.verifyProductDescription(details);
         pageObjects.wishlist.deleteItemFromTheWishlist();
         pageObjects.wishlist.verifyWishlistIsEmpty("Wishlist is Empty!");
 
@@ -46,6 +48,7 @@ public class WishlistTest extends BaseUtils {
     @Test(description = "Verify that user is able to add & remove the item from the product listing page")
     public void addRemoveProductFromProductListing()
     {
+        pageObjects.common.countrySelection("Oman");
         pageObjects.home.mouseHoverOnProfileIcon();
         pageObjects.home.clickSignIn();
         pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
@@ -59,25 +62,54 @@ public class WishlistTest extends BaseUtils {
         pageObjects.header.verifyWishlistCountIsZero();
     }
 
-    @Test
+    @Test(description = "Verify that user is able to add & remove the item from the Quicklook")
     public void addRemoveProductFromQL()
     {
+        pageObjects.common.countrySelection("Oman");
         pageObjects.home.mouseHoverOnProfileIcon();
         pageObjects.home.clickSignIn();
         pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
         pageObjects.signIn.enterPassword("12345678");
         pageObjects.signIn.clickSignIn();
         pageObjects.header.clickNew();
-        String details= pageObjects.plp.getFirstProductDetails();
+        String details= pageObjects.plp.getFirstProductDescription();
         pageObjects.plp.mousehoverOnFirstProduct();
         pageObjects.plp.clickQuickLookBtn();
-        pageObjects.ql.verifyProductDetailsOnQL(details);
+        pageObjects.ql.verifyProductDescriptionOnQL(details);
         pageObjects.ql.addItemToWishlist();
         pageObjects.ql.clickOnCloseQuicklookBtn();
         pageObjects.header.getWishlistItemCount();
         pageObjects.header.clickOnWishlist();
-        pageObjects.wishlist.verifyProductDetails(details);
+        pageObjects.wishlist.verifyProductDescription(details);
         pageObjects.wishlist.deleteItemFromTheWishlist();
         pageObjects.wishlist.verifyWishlistIsEmpty("Wishlist is Empty!");
     }
+
+    @Test(description = "Verify that user is able to add & remove the item from the product detail page")
+    public void addRemoveFromPDP()
+    {
+        pageObjects.common.countrySelection("Oman");
+        pageObjects.home.mouseHoverOnProfileIcon();
+        pageObjects.home.clickSignIn();
+        pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
+        pageObjects.signIn.enterPassword("12345678");
+        pageObjects.signIn.clickSignIn();
+        pageObjects.header.clickNew();
+        String details= pageObjects.plp.getFirstProductDescription();
+        pageObjects.plp.mousehoverOnFirstProduct();
+        pageObjects.plp.clickQuickLookBtn();
+        pageObjects.ql.clickOnSeeProductDetails();
+        pageObjects.pdp.verifyPDPUrlExist();
+        pageObjects.pdp.verifyProductDetailsOnPDP(details);
+        pageObjects.pdp.selectAvailableItemSize();
+        pageObjects.pdp.addItemToWishlist();
+        pageObjects.header.getWishlistItemCount();
+        pageObjects.header.clickOnWishlist();
+        pageObjects.wishlist.verifyProductDescription(details);
+        pageObjects.common.moveBack();
+        pageObjects.pdp.removeItemFromWishlist();
+        pageObjects.header.clickOnWishlist();
+        pageObjects.wishlist.verifyWishlistIsEmpty("Wishlist is Empty!");
+    }
+
 }

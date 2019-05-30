@@ -40,11 +40,15 @@ public class HeaderPage {
     }
 
     public int getWishlistItemCount() {
-        wUtils.iWaitForSeconds(30);
+       wUtils.eWaitForElementVisible(wishlistBucket, 30);
+
+
+
+
+
         boolean status = utils.isElementPresent(wishlistItem,"Verify the visibility of wishlist item count element");
         if (status == true) {
-            wUtils.eWaitForElementVisible(wishlistItem, 30);
-            String wishlistCount = utils.getText(wishlistItem, "Fetch the Wishlist item count");
+            String wishlistCount = utils.getText(wishlistItem, "Wishlist item count");
             return Integer.parseInt(wishlistCount);
         }
         else
@@ -71,18 +75,20 @@ public class HeaderPage {
     {
         wUtils.eWaitForElementVisible(wishlistBucket,30);
         utils.javaScriptClick(wishlistBucket,"Click on wishlist bucket icon");
-       // utils.click();
+
     }
 
     public void clickOnCart()
     {
         wUtils.eWaitForElementVisible(cartBucket,30);
-        utils.click(cartBucket,"Click on cart bucket icon");
+        utils.javaScriptClick(cartBucket,"Click on cart bucket icon");
+
     }
 
-    public void verifyWishlistCountIsZero()
+    public int verifyWishlistCountIsZero()
     {
         int actualCount= getWishlistItemCount();
         vUtils.verifyIntEquals(actualCount,0,"Verify that wishlist count is zero",true);
+        return actualCount;
     }
 }

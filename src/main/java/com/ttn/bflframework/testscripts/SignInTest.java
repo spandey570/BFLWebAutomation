@@ -25,6 +25,8 @@ public class SignInTest extends BaseUtils {
     @Test
     public void signInWithValidUser()
     {
+        pageObjects.common.countrySelection("Oman");
+        pageObjects.common.verifyDomain("oman");
         pageObjects.home.mouseHoverOnProfileIcon();
         pageObjects.home.clickSignIn();
         pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
