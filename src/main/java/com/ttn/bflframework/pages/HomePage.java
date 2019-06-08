@@ -13,7 +13,8 @@ public class HomePage {
     public VerifyUtils vUtils;
 
 
-    String filePath="D:\\Selenium\\ExcelTestData";
+    String usrDirectory= System.getProperty("user.dir");
+    String filePath=usrDirectory+"\\src\\main\\java\\com\\ttn\\bflframework\\testdata";
     String fileName= GenericUtils.getDataFromConfig("FileName");
     String sheetName="HomePage";
 
@@ -32,7 +33,7 @@ public class HomePage {
 
     public void mouseHoverOnProfileIcon()
     {
-      //  wUtils.checkForPageLoad(60);
+        wUtils.checkForPageLoad(60);
         wUtils.eWaitForElementVisible(profileIcon,30);
         utils.mouseHover(profileIcon,"Mouse hover on profile icon");
     }

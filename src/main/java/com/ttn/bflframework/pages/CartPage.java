@@ -12,7 +12,8 @@ public class CartPage {
     public VerifyUtils vUtils;
 
 
-    String filePath="D:\\Selenium\\ExcelTestData";
+    String usrDirectory= System.getProperty("user.dir");
+    String filePath=usrDirectory+"\\src\\main\\java\\com\\ttn\\bflframework\\testdata";
     String fileName= GenericUtils.getDataFromConfig("FileName");
     String sheetName="CartPage";
 
@@ -79,6 +80,7 @@ public class CartPage {
     {
         wUtils.eWaitForElementVisible(checkoutBtn,30);
         utils.click(checkoutBtn,"Click on checkout button");
+        wUtils.checkForPageLoad(30);
     }
 
     public String getTotalPrice()

@@ -12,7 +12,8 @@ public class QuicklookPage {
     public VerifyUtils vUtils;
 
 
-    String filePath = "D:\\Selenium\\ExcelTestData";
+    String usrDirectory= System.getProperty("user.dir");
+    String filePath=usrDirectory+"\\src\\main\\java\\com\\ttn\\bflframework\\testdata";
     String fileName = GenericUtils.getDataFromConfig("FileName");
     String sheetName = "QuicklookPage";
 

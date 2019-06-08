@@ -82,6 +82,7 @@ public class WaitUtils {
             }
             log.info("Waiting for page load till "+sec+" secs to check If page Is ready after 1 second.");
             //To check page ready state.
+
             if (js.executeScript("return document.readyState").toString().equals("complete")) {
                 log.info("Page is completely loaded after "+(i+1)+" seconds");
                 break;

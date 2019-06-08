@@ -107,6 +107,7 @@ public class WishlistTest extends BaseUtils {
         pageObjects.header.clickOnWishlist();
         pageObjects.wishlist.verifyProductDescription(details);
         pageObjects.common.moveBack();
+        pageObjects.pdp.selectAvailableItemSize();
         pageObjects.pdp.removeItemFromWishlist();
         pageObjects.header.clickOnWishlist();
         pageObjects.wishlist.verifyWishlistIsEmpty("Wishlist is Empty!");

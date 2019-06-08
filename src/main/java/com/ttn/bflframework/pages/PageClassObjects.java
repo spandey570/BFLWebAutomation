@@ -18,6 +18,7 @@ public class PageClassObjects {
      public ProductDetailPage pdp;
      public CommonScenarios common;
      public CartPage cart;
+     public CheckoutPage checkout;
 
      public PageClassObjects(UIUtils utils, WaitUtils wUtils, VerifyUtils vUtils) throws IOException {
          home= new HomePage(utils,wUtils,vUtils);
@@ -29,6 +30,7 @@ public class PageClassObjects {
          pdp= new ProductDetailPage(utils,wUtils,vUtils);
          common= new CommonScenarios(utils,wUtils,vUtils);
          cart= new CartPage(utils,wUtils,vUtils);
+         checkout= new CheckoutPage(utils,wUtils,vUtils);
      }
 
 }

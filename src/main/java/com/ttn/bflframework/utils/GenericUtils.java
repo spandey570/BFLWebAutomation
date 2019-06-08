@@ -13,12 +13,12 @@ import java.util.Properties;
 
 public class GenericUtils {
 
-
+    static String usrDirectory= System.getProperty("user.dir");
 
     public static String getDataFromConfig(String key) throws IOException {
 
         Properties prop = new Properties();
-        File f = new File("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\config.properties");
+        File f = new File(usrDirectory+"\\src\\main\\resources\\config.properties");
 
         FileInputStream fip = new FileInputStream(f);
 
@@ -32,7 +32,7 @@ public class GenericUtils {
         String screenshotName = "image" + System.currentTimeMillis() + ".png";
         TakesScreenshot scrShot =((TakesScreenshot)driver);
         File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(SrcFile, new File("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\ScreenShots\\"+screenshotName));
+        FileUtils.copyFile(SrcFile, new File(usrDirectory+"\\src\\main\\resources\\ScreenShots\\"+screenshotName));
         return screenshotName;
 
     }

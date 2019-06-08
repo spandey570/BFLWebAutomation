@@ -43,7 +43,7 @@ public class CommonScenarios {
         else
         {
             utils.click(countrySelectionDrpdwn,"Click on country selection dropdown");
-            wUtils.iWaitForSeconds(15);
+            wUtils.iWaitForSeconds(30);
             utils.click(By.xpath("//*[@class='country_selector']//span[text()='"+country+"']"),"Application is going to switch in "+country+" domain");
         }
     }

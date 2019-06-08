@@ -30,19 +30,21 @@ public class BaseUtils {
 
    public UIUtils utils;
 
+   String usrDirectory= System.getProperty("user.dir");
+
 
 
 @BeforeTest
 public void config()
 {
    //Extent Report Setup in BaseLib
-   extent = new ExtentReports("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\AutomationReport\\AutomationReport.html", true);
+   extent = new ExtentReports(usrDirectory+"\\src\\main\\AutomationReport\\AutomationReport.html", true);
    extent.addSystemInfo("HostName", "Srikant Pandey");
    extent.addSystemInfo("Environment", "Web");
-   extent.loadConfig(new File("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\extent-config.xml"));
+   extent.loadConfig(new File(usrDirectory+"\\src\\main\\resources\\extent-config.xml"));
 
    //Logger Setup in BaseLib
-   PropertyConfigurator.configure("D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\resources\\log4j.properties");
+   PropertyConfigurator.configure(usrDirectory+"\\src\\main\\resources\\log4j.properties");
 }
 
 @BeforeMethod
@@ -113,11 +115,11 @@ protected void startReporting(Method method) {
 {
      System.out.println(browser+" is going to launch");
    if (browser.equalsIgnoreCase("Chrome")) {
-      System.setProperty("webdriver.chrome.driver", "D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\Test\\Chrome74\\chromedriver.exe");
+      System.setProperty("webdriver.chrome.driver", usrDirectory+"\\src\\main\\Test\\Chrome74\\chromedriver.exe");
       driver = new ChromeDriver();
       log.info(browser+ "browser instance is launching");
    } else if (browser.equalsIgnoreCase("Firefox")) {
-      System.setProperty("webdriver.gecko.driver", "D:\\BFLWebAutomation\\BFLWebAutomation\\src\\main\\Drivers\\geckodriver.exe");
+      System.setProperty("webdriver.gecko.driver", usrDirectory+"\\src\\main\\Drivers\\geckodriver.exe");
       driver = new FirefoxDriver();
       log.info(browser+ "browser instance is launching");
    } else if (browser.equalsIgnoreCase("Edge")) {

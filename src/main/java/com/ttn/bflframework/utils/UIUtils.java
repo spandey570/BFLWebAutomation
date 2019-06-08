@@ -24,9 +24,12 @@ public class UIUtils {
 
     public void click(By locator, String description) {
         try {
-            driver.findElement(locator).click();
-            testReport.log(LogStatus.PASS, description);
-            log.info(description);
+            if (driver.findElements(locator).size() != 0
+                    && driver.findElement(locator).isEnabled()) {
+                driver.findElement(locator).click();
+                testReport.log(LogStatus.PASS, description);
+                log.info(description);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Could not perform action " + e.getMessage());
@@ -86,8 +89,8 @@ public class UIUtils {
         }
         else
         {
-            log.info("User is redirected to incorrect url");
-            testReport.log(LogStatus.FAIL,"User is redirected to incorrect url");
+            log.info("User is redirected to incorrect url: "+currentUrl);
+            testReport.log(LogStatus.FAIL,"User is redirected to incorrect url: "+currentUrl);
         }
     }
 
